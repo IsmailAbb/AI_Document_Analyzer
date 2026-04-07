@@ -26,6 +26,7 @@ router.post('/upload', requireAuth, upload.single('file'), async (req: AuthReque
   const documentId = doc.rows[0].id
   const fileBuffer = req.file.buffer
   const fileName = req.file.originalname
+  const detail = req.body.detail || 'medium'
 
   // Return immediately — process async
   res.status(202).json({ documentId, status: 'processing' })
@@ -36,6 +37,7 @@ router.post('/upload', requireAuth, upload.single('file'), async (req: AuthReque
       const formData = new FormData()
       const blob = new Blob([fileBuffer as BlobPart], { type: 'application/pdf' })
       formData.append('file', blob, fileName)
+      formData.append('detail', detail)
 
       const aiResponse = await axios.post(
         `${process.env.AI_SERVICE_URL}/analyze/`,

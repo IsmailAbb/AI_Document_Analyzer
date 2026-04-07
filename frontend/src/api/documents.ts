@@ -1,8 +1,9 @@
 import client from './client'
 
-export const uploadDocument = (file: File) => {
+export const uploadDocument = (file: File, detail: string = 'medium') => {
   const formData = new FormData()
   formData.append('file', file)
+  formData.append('detail', detail)
   return client.post('/documents/upload', formData)
 }
 

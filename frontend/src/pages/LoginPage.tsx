@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { login, register } from '../api/auth'
 import toast from 'react-hot-toast'
@@ -8,11 +8,13 @@ export default function LoginPage() {
   const [password, setPassword] = useState('')
   const [isRegister, setIsRegister] = useState(false)
   const [loading, setLoading] = useState(false)
+  const submitting = useRef(false)
   const navigate = useNavigate()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (loading) return
+    if (submitting.current) return
+    submitting.current = true
     setLoading(true)
     try {
       const fn = isRegister ? register : login
@@ -26,7 +28,7 @@ export default function LoginPage() {
           ? (err as { response: { data: { error: string } } }).response.data.error
           : isRegister ? 'Registration failed' : 'Invalid credentials'
       toast.error(message)
-    } finally {
+      submitting.current = false
       setLoading(false)
     }
   }

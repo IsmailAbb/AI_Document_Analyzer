@@ -11,8 +11,11 @@ interface Document {
   created_at: string
 }
 
+const DETAIL_LEVELS = ['short', 'medium', 'long'] as const
+
 export default function DashboardPage() {
   const [docs, setDocs] = useState<Document[]>([])
+  const [detail, setDetail] = useState<string>('medium')
   const navigate = useNavigate()
 
   const fetchDocs = async () => {
@@ -35,7 +38,23 @@ export default function DashboardPage() {
         <h1>My Documents</h1>
         <button className="btn btn-outline" onClick={handleLogout}>Logout</button>
       </div>
-      <UploadDropzone onUploadComplete={fetchDocs} />
+
+      <div className="detail-picker">
+        <label>Analysis detail:</label>
+        <div className="detail-options">
+          {DETAIL_LEVELS.map(level => (
+            <button
+              key={level}
+              className={`detail-btn ${detail === level ? 'active' : ''}`}
+              onClick={() => setDetail(level)}
+            >
+              {level}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <UploadDropzone detail={detail} onUploadComplete={fetchDocs} />
       <div className="doc-list">
         {docs.length === 0
           ? <p className="empty-state">No documents yet -- upload a PDF above</p>

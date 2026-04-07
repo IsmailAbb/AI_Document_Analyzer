@@ -3,10 +3,11 @@ import { uploadDocument } from '../api/documents'
 import toast from 'react-hot-toast'
 
 interface Props {
+  detail: string
   onUploadComplete: () => void
 }
 
-export default function UploadDropzone({ onUploadComplete }: Props) {
+export default function UploadDropzone({ detail, onUploadComplete }: Props) {
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     accept: { 'application/pdf': ['.pdf'] },
     maxSize: 10 * 1024 * 1024,
@@ -16,7 +17,7 @@ export default function UploadDropzone({ onUploadComplete }: Props) {
         return
       }
       try {
-        await uploadDocument(accepted[0])
+        await uploadDocument(accepted[0], detail)
         toast.success('Uploaded! Analyzing in background...')
         onUploadComplete()
       } catch {

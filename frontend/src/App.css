@@ -58,6 +58,54 @@
   text-decoration: underline;
 }
 
+/* Detail Picker */
+.detail-picker {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.detail-picker label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-h);
+}
+
+.detail-options {
+  display: flex;
+  gap: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.detail-btn {
+  padding: 6px 18px;
+  border: none;
+  background: var(--surface);
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  text-transform: capitalize;
+  transition: background 0.2s, color 0.2s;
+  border-right: 1px solid var(--border);
+}
+
+.detail-btn:last-child {
+  border-right: none;
+}
+
+.detail-btn:hover {
+  background: var(--accent-light);
+}
+
+.detail-btn.active {
+  background: var(--accent);
+  color: white;
+}
+
 /* Upload Dropzone */
 .dropzone {
   border: 2px dashed var(--border);
