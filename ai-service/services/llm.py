@@ -1,8 +1,9 @@
 from openai import AsyncOpenAI
+import os
 
 client = AsyncOpenAI(
     api_key='ollama',
-    base_url='http://localhost:11434/v1'
+    base_url=os.getenv('OLLAMA_BASE_URL', 'http://localhost:11434/v1')
 )
 
 SYSTEM = '''You are a document analyst. Given document text, return JSON with:
