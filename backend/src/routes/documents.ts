@@ -42,7 +42,7 @@ router.post('/upload', requireAuth, upload.single('file'), async (req: AuthReque
       const aiResponse = await axios.post(
         `${process.env.AI_SERVICE_URL}/analyze/`,
         formData,
-        { headers: { 'Content-Type': 'multipart/form-data' } }
+        { headers: { 'Content-Type': 'multipart/form-data' }, timeout: 120000 }
       )
 
       await pool.query(
